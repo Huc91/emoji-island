@@ -1,0 +1,6 @@
+.island__tile {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: rgb(65, 221, 112);
+  font-size: 1rem;
+}

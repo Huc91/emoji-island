@@ -1,0 +1,7 @@
+.island {
+  width: 24rem;
+  height: 24rem;
+  background-color: rgb(36, 58, 252);
+  display: flex;
+  flex-wrap: wrap;
+}
