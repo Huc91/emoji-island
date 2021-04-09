@@ -1,6 +1,7 @@
 import './island.css';
 
 import IslandTile from 'components/IslandTile'
+import Animal from 'components/Animal'
 
 function Island(){
   const startingOptions = {
@@ -19,11 +20,17 @@ function Island(){
     },
   }
 
+  const islandSize = Math.pow(startingOptions.tiles, 2)
+
+  const animals = ['🐆', '🦌', '🐃', '🐄', '🐏', '🐫', '🦙', '🦏', '🐀', '🦘', '🐓', '🐢', '🐊', '🐍', '🦖', '🐜', '🐺'];
+
+  const animalPosition = islandSize/2 + startingOptions.tiles / 2;
+
   const { trees: { dedicidous, evergreen} } = startingOptions;
 
   const islandTiles = [];
 
-  function addTile(){
+  function addTileOfTerrain(){
     const random = Math.random();
     if(random > 0.9 && evergreen.count < evergreen.value) {
       return evergreen.emoji
@@ -34,13 +41,42 @@ function Island(){
     return false;
   }
 
-  for( let i = 0; i < Math.pow(startingOptions.tiles, 2); i++) {
-    islandTiles.push(addTile());
+  function addTileAnimal(animals){
+
+    const index = Math.round(Math.random() * animals.length);
+    return animals[index];
+
+  }
+
+  for( let i = 0; i < islandSize; i++) {
+
+        islandTiles.push(
+          addTileOfTerrain()
+        );
+
+  }
+
+  function moveAnimal(){
+    let whereWantsToMove = animalPosition + 1;
+    if(islandTiles !== false) {
+      animalPosition = whereWantsToMove;
+      return 'right';
+    }
   }
 
   return (
     <div className="island">
-      { islandTiles.map( (tile) => <IslandTile element={tile ? tile : ''}></IslandTile>) }
+      {
+        islandTiles.map( (tile, i) => {
+            return <IslandTile key={i * i + i}element={tile ? tile : ''}></IslandTile>
+          }
+        )
+      }
+      <Animal
+        specie={addTileAnimal(animals)}
+        startingPoint={ animalPosition }
+        tiles={startingOptions.tiles}
+      ></Animal>
     </div>
   );
 }
